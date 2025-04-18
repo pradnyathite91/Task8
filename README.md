@@ -8,7 +8,7 @@ This project demonstrates a basic **Java HelloWorld** application built using **
 
 ## 🧰 Tools Used
 
-- Java JDK 8 (Amazon Linux default)
+-Java JDK 8 (Amazon Linux default)
 - Apache Maven
 - Jenkins (Docker)
 - Amazon Linux EC2
@@ -62,23 +62,44 @@ apache-tomcat-9.0.104]# ls -ltra
 ./bin/startup.sh
 cat /root/.jenkins/secrets/initialAdminPassword
 ```
-### 3.Prepare Project Directory
+### 3.Set Up Jenkins
+`Login using the admin password.
+Install Suggested Plugins.
+Create admin user (or skip and continue).`
+
+### 3.Configure Maven in Jenkins
+- Go to: Manage Jenkins → Global Tool Configuration
+- Scroll to Maven, click Add Maven
+- Name: Maven 3.9.9`
+
+### 4.Prepare Project Directory
 ```bash
 ls -ltra
 cd /mnt
 mkdir hello-java-maven
 cd hello-java-maven
 ```
-### 4.Create Java File
+### 5.Create Java File
 ```bash
 mkdir -p src/main/java
 nano src/main/java/HelloWorld.java
 ```
-### 5.Create pom.xml
+### 6.Create pom.xml
 ```bash
 nano pom.xml
 cat pom.xml
 ```
+### 7.Create Jenkins Freestyle Job
+
+1.Open Jenkins: http://<EC2-IP>:8080
+2.Click New Item → Enter name java-maven-build → Select Freestyle project
+3.Under Source Code Management:
+- If using GitHub: https://github.com/pradnyathite91/Task8.git
+- If building local: skip
+4.Under Build section:
+- Click Add build step → Invoke top-level Maven targets
+5.Set Goals: -f Task8/pom.xml clean install
+-Click Save
 ```bash
 \cat src/main/java/HelloWorld.java
 cd /root/.jenkins/workspace/job
